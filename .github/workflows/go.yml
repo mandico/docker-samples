@@ -1,0 +1,33 @@
+name: Go Build and Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Build and Test
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Set up Go
+      uses: actions/setup-go@v3
+      with:
+        go-version: '1.22' # Especifique a versão do Go aqui
+
+    - name: Check out code into the Go module directory
+      uses: actions/checkout@v3
+
+    - name: Get dependencies
+      run: go mod download
+      working-directory: docker-go
+
+    - name: Test
+      run: go test -v ./...
+      working-directory: docker-go
+
+    - name: Build
+      run: go build -v ./...
+      working-directory: docker-go
