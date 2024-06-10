@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: Build and Test
+    name: Golang - Tests and Build
     runs-on: ubuntu-latest
 
     steps:
@@ -28,6 +28,10 @@ jobs:
       run: go test -v ./...
       working-directory: docker-go
 
-    - name: Build
+    - name: Build App
       run: go build -v ./...
+      working-directory: docker-go
+
+    - name: Build Image
+      run: docker build -t docker-go .
       working-directory: docker-go
